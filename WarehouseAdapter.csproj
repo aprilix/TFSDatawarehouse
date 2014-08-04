@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.TeamFoundation, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\VS2012\Microsoft.TeamFoundation.dll</HintPath>
@@ -41,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.TeamFoundation.Framework.Server, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Framework.Server.dll</HintPath>
@@ -49,6 +59,8 @@
       <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Warehouse.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,17 +69,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\TFSUsers.cs" />
+    <Compile Include="DataAccessComponent\TFSUsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TFSUsersAdapter.cs" />
+    <Compile Include="Utils\Log.cs" />
+    <Compile Include="VersionHelper\IVersionHelper.cs" />
+    <Compile Include="VersionHelper\TFSUsersAdapterVersion.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Adapter.dll" />
     <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Client.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Common.dll" />
     <Content Include="Libs\VS2012\Microsoft.TeamFoundation.dll" />
     <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Framework.Server.dll" />
     <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Warehouse.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
