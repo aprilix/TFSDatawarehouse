@@ -8,6 +8,8 @@ using Microsoft.TeamFoundation.Warehouse;
 using TFS.Warehouse.Adapter.VersionHelper;
 using TFS.Warehouse.Adapter.DataAccessComponent;
 using Microsoft.TeamFoundation.Framework.Server;
+using TFS.Warehouse.Adapter.Model;
+using System.Data.SqlClient;
 
 namespace TFS.Warehouse.Adapter
 {
@@ -34,6 +36,8 @@ namespace TFS.Warehouse.Adapter
 
         public override DataChangesResult MakeDataChanges()
         {
+            System.Diagnostics.Debugger.Launch();
+            
             if (_adapterState != AdapterState.Stopped)
                 return DataChangesResult.NoChangesPending;
 
@@ -50,7 +54,30 @@ namespace TFS.Warehouse.Adapter
                 }
 
                 var tfsDatabaseSettings = RequestContext.GetService<TeamFoundationDatabaseSettings>();
-                               
+
+                
+                var TFSUsers = new List<TFSUsers>();
+                using (var tblCommandContext = new TblCommandContext(tfsDatabaseSettings.ReadConnectionString(RequestContext, "Wit")))
+                {
+                    var sql = new StringBuilder();
+
+                    sql.Append("select Convert(date, StartTime) Data, IdentityName, UserAgent, Count(IdentityName) Quantidade");
+                    sql.Append("from tbl_command");
+                    sql.Append("where StartTime >= @StartTime");
+                    sql.Append("group by Convert(date, StartTime), IdentityName, UserAgent");
+                    sql.Append("order by Convert(date, StartTime)");
+
+
+                    var commands = tblCommandContext.Set<TblCommand>().SqlQuery(sql.ToString(), new SqlParameter("@StartTime", dac.GetProperty(null, "StartTime") ?? "2010-01-01"));
+
+                    TFSUsers = commands.Select(x => new TFSUsers(x.IdentityName, x.UserAget, x.StartDate, x.Quantidade)).ToList();
+                }
+
+                using (var tfsUsersContext = new TFSUsersContext())
+                {
+                    TFSUsers.ForEach(x => tfsUsersContext.TFSUsers.Add(x));
+                    tfsUsersContext.SaveChanges();
+                }
             }
 
             return ChangeAdapterState(DataChangesResult.NoChangesPending);

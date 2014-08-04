@@ -15,12 +15,14 @@ namespace TFS.Warehouse.Adapter.Model
 
         public DateTime AccessDate { get; set; }
 
-        public TFSUsers(string usuario, string userAgent, DateTime accessDate)
+        public TFSUsers(string usuario, string userAgent, DateTime accessDate, long quantidade)
         {
             UserName    = usuario;
-            UserAgent  = userAgent;
-            AccessDate = accessDate;
+            UserAgent   = userAgent;
+            AccessDate  = accessDate;
+            Quantidade  = quantidade; 
         }
-        
+
+        public long Quantidade { get; set; }
     }
 }
