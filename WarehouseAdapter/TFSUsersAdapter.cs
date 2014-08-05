@@ -39,34 +39,42 @@ namespace TFS.Warehouse.Adapter
 
         public override DataChangesResult MakeDataChanges()
         {
-            System.Diagnostics.Debugger.Launch();
-            
-            if (_adapterState != AdapterState.Stopped)
-                return DataChangesResult.NoChangesPending;
+            //System.Diagnostics.Debugger.Launch();
 
-            if (IsWarehouseHostCancelled || IsWarehouseSchemaLockRequested)
+            try
             {
-                return ChangeAdapterState(DataChangesResult.DataChangesPending);
-            }
-           
-            using (var dac = WarehouseContext.CreateWarehouseDataAccessComponent())
-            {
-                if (_warehouseVersion.NeedSchemaChanges(dac))
+                if (_adapterState != AdapterState.Stopped)
+                    return DataChangesResult.NoChangesPending;
+
+                if (IsWarehouseHostCancelled || IsWarehouseSchemaLockRequested)
                 {
-                    return ChangeAdapterState(DataChangesResult.SchemaChangesPending);
+                    return ChangeAdapterState(DataChangesResult.DataChangesPending);
                 }
 
-                TFSUsersLogUpdater.UpdateTFSUsersLog(dac, RequestContext);
-            }
+                using (var dac = WarehouseContext.CreateWarehouseDataAccessComponent())
+                {
+                    if (_warehouseVersion.NeedSchemaChanges(dac))
+                    {
+                        return ChangeAdapterState(DataChangesResult.SchemaChangesPending);
+                    }
 
-            return ChangeAdapterState(DataChangesResult.NoChangesPending);
+                    TFSUsersLogUpdater.UpdateTFSUsersLog(dac, RequestContext);
+                }
+
+                return ChangeAdapterState(DataChangesResult.NoChangesPending);
+            }
+            catch (Exception err)
+            {
+                Utils.Log.LogEvent(RequestContext, err.Message, Utils.Log.LogEventInformationLevel.Error);
+                throw;
+            }
         }
 
         public override void MakeSchemaChanges()
         {
             try
             {
-                using (var db = new TFSUsersContext())
+                using (var db = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
                 {
                     db.Database.CreateIfNotExists();
                 }
@@ -79,6 +87,7 @@ namespace TFS.Warehouse.Adapter
             catch (Exception err)
             {
                 Utils.Log.LogEvent(RequestContext, err.Message, Utils.Log.LogEventInformationLevel.Error);
+                throw;
             }
         }   
 

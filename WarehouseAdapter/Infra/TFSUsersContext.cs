@@ -12,7 +12,11 @@ namespace TFS.Warehouse.Adapter.Infra
 {
     public class TFSUsersContext : DbContext
     {
-        public DbSet<TFSUsers> TFSUsers;
+        public TFSUsersContext() : base() { }
+
+        public TFSUsersContext(string connString) : base(connString) { }
+
+        public DbSet<TFSUsers> TFSUsers {get;set;}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

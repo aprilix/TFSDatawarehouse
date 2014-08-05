@@ -18,9 +18,9 @@ namespace TFS.Warehouse.Adapter.Services
         private static string dateOfLastCommandSavedProperty = "/Adapter/Schema/TFSUsersAdapter/DateOfLastCommandSaved";
 
         private static string sql = new StringBuilder()
-                                    .AppendLine("SELECT Convert(date, StartTime) Data, IdentityName, UserAgent, Count(IdentityName) Quantity")
+                                    .AppendLine("SELECT Max(StartTime) StartTime, IdentityName, UserAgent, Count(IdentityName) Quantity")
                                     .AppendLine("  FROM tbl_Command")
-                                    .AppendLine(" WHERE StartDate >= @StartDate")
+                                    .AppendLine(" WHERE StartTime >= @StartTime")
                                     .AppendLine(" GROUP BY Convert(date,StartTime), IdentityName, UserAgent")
                                     .AppendLine(" ORDER BY Convert(date,StartTime)").ToString();
 
@@ -42,17 +42,22 @@ namespace TFS.Warehouse.Adapter.Services
             {
                 var dateOfLastCommandSaved = dac.GetProperty(null, dateOfLastCommandSavedProperty);
 
-                commands = collectionDb.Database.SqlQuery<TblCommandInfo>(sql, new SqlParameter("@StartDate", DateTime.Parse(dateOfLastCommandSaved).Date)).ToList();
+                if (string.IsNullOrEmpty(dateOfLastCommandSaved))
+                {
+                    dateOfLastCommandSaved = "01/01/2001";
+                }
+
+                commands = collectionDb.Database.SqlQuery<TblCommandInfo>(sql, new SqlParameter("@StartTime", DateTime.Parse(dateOfLastCommandSaved).Date)).ToList();
             }
 
-            using (var tfsUsersContext = new TFSUsersContext())
+            using (var tfsUsersContext = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
             {
-                commands.ForEach(x => tfsUsersContext.TFSUsers.Add(new TFSUsers(x.UserName, x.UserAgent, x.StartTime, x.Quantity)));
+                commands.ForEach(x => tfsUsersContext.TFSUsers.Add(new TFSUsers(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity)));
 
                 tfsUsersContext.SaveChanges();
             }
 
-            dac.SetProperty(null, dateOfLastCommandSavedProperty, commands.Max(x => x.StartTime).Date.ToString());
+            dac.SetProperty(null, dateOfLastCommandSavedProperty, commands.Max(x => x.StartTime).ToString());
         }
 
         private static IRegistration GetRegistrationService(TeamFoundationRequestContext requestContext)
