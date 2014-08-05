@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.TeamFoundation;
 using Microsoft.TeamFoundation.Warehouse;
 using TFS.Warehouse.Adapter.VersionHelper;
-using TFS.Warehouse.Adapter.DataAccessComponent;
+using TFS.Warehouse.Adapter.Infra;
 using Microsoft.TeamFoundation.Framework.Server;
+using Microsoft.TeamFoundation.Server;
+using Microsoft.TeamFoundation.Client;
+using TFS.Warehouse.Adapter.Model;
+using System.Data.SqlClient;
+using TFS.Warehouse.Adapter.Services;
 
 namespace TFS.Warehouse.Adapter
 {
@@ -49,8 +54,7 @@ namespace TFS.Warehouse.Adapter
                     return ChangeAdapterState(DataChangesResult.SchemaChangesPending);
                 }
 
-                var tfsDatabaseSettings = RequestContext.GetService<TeamFoundationDatabaseSettings>();
-                               
+                TFSUsersLogUpdater.UpdateTFSUsersLog(dac, RequestContext);
             }
 
             return ChangeAdapterState(DataChangesResult.NoChangesPending);

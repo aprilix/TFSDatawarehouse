@@ -69,9 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infra\TFSCollectionContext.cs" />
+    <Compile Include="Model\TblCommandInfo.cs" />
     <Compile Include="Model\TFSUsers.cs" />
-    <Compile Include="DataAccessComponent\TFSUsersContext.cs" />
+    <Compile Include="Infra\TFSUsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TFSUsersLogUpdater.cs" />
     <Compile Include="TFSUsersAdapter.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="VersionHelper\IVersionHelper.cs" />
