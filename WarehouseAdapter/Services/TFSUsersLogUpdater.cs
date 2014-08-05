@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TFS.Warehouse.Adapter.Infra;
 using TFS.Warehouse.Adapter.Model;
+using System.Data.Entity;
 
 namespace TFS.Warehouse.Adapter.Services
 {
@@ -52,7 +53,20 @@ namespace TFS.Warehouse.Adapter.Services
 
             using (var tfsUsersContext = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
             {
-                commands.ForEach(x => tfsUsersContext.TFSUsers.Add(new TFSUsers(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity)));
+                commands.ForEach(x => 
+                {
+                    var tfsUserLog = tfsUsersContext.TFSUsers.FirstOrDefault(u => u.UserAgent == x.UserAgent && u.UserName == x.IdentityName && DbFunctions.TruncateTime(u.AccessDate) == DbFunctions.TruncateTime(x.StartTime));
+
+                    if (tfsUserLog != null)
+                    {
+                        tfsUserLog.Quantity = x.Quantity;
+                        tfsUserLog.AccessDate = x.StartTime;
+                    }
+                    else
+                    { 
+                        tfsUsersContext.TFSUsers.Add(new TFSUsers(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity));
+                    }
+                });
 
                 tfsUsersContext.SaveChanges();
             }
