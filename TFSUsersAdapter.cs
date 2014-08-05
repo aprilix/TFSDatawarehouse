@@ -39,6 +39,8 @@ namespace TFS.Warehouse.Adapter
 
         public override DataChangesResult MakeDataChanges()
         {
+            System.Diagnostics.Debugger.Launch();
+            
             if (_adapterState != AdapterState.Stopped)
                 return DataChangesResult.NoChangesPending;
 

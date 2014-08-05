@@ -31,8 +31,5 @@ namespace TFS.Warehouse.Adapter.Model
             AccessDate  = accessDate;
             Quantity    = quantity;
         }
-
-        
-        
     }
 }
