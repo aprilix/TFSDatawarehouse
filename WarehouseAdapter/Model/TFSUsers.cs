@@ -12,7 +12,7 @@ using Microsoft.TeamFoundation.Client;
 
 namespace TFS.Warehouse.Adapter.Model
 {
-    public class TFSUsers
+    public class TFSUsageLog
     {
         public int Id { get; set; }
 
@@ -24,7 +24,7 @@ namespace TFS.Warehouse.Adapter.Model
 
         public int Quantity { get; set; }
 
-        public TFSUsers(string userName, string userAgent, DateTime accessDate, int quantity)
+        public TFSUsageLog(string userName, string userAgent, DateTime accessDate, int quantity)
         {
             UserName    = userName;
             UserAgent   = userAgent;
@@ -32,6 +32,6 @@ namespace TFS.Warehouse.Adapter.Model
             Quantity    = quantity;
         }
 
-        public TFSUsers() { }
+        public TFSUsageLog() { }
     }
 }

@@ -55,7 +55,7 @@ namespace TFS.Warehouse.Adapter.Services
             {
                 commands.ForEach(x => 
                 {
-                    var tfsUserLog = tfsUsersContext.TFSUsers.FirstOrDefault(u => u.UserAgent == x.UserAgent && u.UserName == x.IdentityName && DbFunctions.TruncateTime(u.AccessDate) == DbFunctions.TruncateTime(x.StartTime));
+                    var tfsUserLog = tfsUsersContext.TFSUsageLog.FirstOrDefault(u => u.UserAgent == x.UserAgent && u.UserName == x.IdentityName && DbFunctions.TruncateTime(u.AccessDate) == DbFunctions.TruncateTime(x.StartTime));
 
                     if (tfsUserLog != null)
                     {
@@ -64,7 +64,7 @@ namespace TFS.Warehouse.Adapter.Services
                     }
                     else
                     { 
-                        tfsUsersContext.TFSUsers.Add(new TFSUsers(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity));
+                        tfsUsersContext.TFSUsageLog.Add(new TFSUsageLog(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity));
                     }
                 });
 

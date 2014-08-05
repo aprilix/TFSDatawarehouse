@@ -16,13 +16,13 @@ namespace TFS.Warehouse.Adapter.Infra
 
         public TFSUsersContext(string connString) : base(connString) { }
 
-        public DbSet<TFSUsers> TFSUsers {get;set;}
+        public DbSet<TFSUsageLog> TFSUsageLog {get;set;}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Types<TFSUsers>()
+            modelBuilder.Types<TFSUsageLog>()
                 .Configure(x =>
                 {
                     x.Property(p => p.Id).IsKey().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
