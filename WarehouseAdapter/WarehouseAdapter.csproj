@@ -43,7 +43,7 @@
       <HintPath>Libs\VS2012\Microsoft.TeamFoundation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Adapter">
-      <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Adapter.dll</HintPath>
+      <HintPath>..\Libs\VS2012\Microsoft.TeamFoundation.Adapter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Client, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -55,11 +55,12 @@
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Framework.Server, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Framework.Server.dll</HintPath>
+      <HintPath>..\Libs\VS2012\Microsoft.TeamFoundation.Framework.Server.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Warehouse">
-      <HintPath>Libs\VS2012\Microsoft.TeamFoundation.Warehouse.dll</HintPath>
+      <HintPath>..\Libs\VS2012\Microsoft.TeamFoundation.Warehouse.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Services.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
