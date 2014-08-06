@@ -25,21 +25,11 @@ namespace TFS.Warehouse.Adapter.Services
                                     .AppendLine(" GROUP BY Convert(date,StartTime), IdentityName, UserAgent")
                                     .AppendLine(" ORDER BY Convert(date,StartTime)").ToString();
 
-        public static void UpdateTFSUsersLog(WarehouseDataAccessComponent dac, TeamFoundationRequestContext requestContext)
+         internal static void UpdateTFSUsersLog(WarehouseDataAccessComponent dac, TeamFoundationRequestContext requestContext, string _tpcDatabaseConnString, string _tfsLogUsageConnString)
         {
-            var tfsRegistration = GetRegistrationService(requestContext);
-
-            var entries = tfsRegistration.GetRegistrationEntries("vstfs").Select(x => x.Databases.FirstOrDefault(y => y.Name == "BIS DB"));
-
-            var connString = "";
-            if (entries.Any())
-                connString = entries.First().ConnectionString;
-            else
-                throw new ApplicationException("Não foi possível determinar a string de conexao com o Banco de Dados da Collection");
-
             var commands = new List<TblCommandInfo>();
 
-            using (var collectionDb = new TFSCollectionContext(connString))
+            using (var collectionDb = new TFSCollectionContext(_tpcDatabaseConnString))
             {
                 var dateOfLastCommandSaved = dac.GetProperty(null, dateOfLastCommandSavedProperty);
 
@@ -51,7 +41,8 @@ namespace TFS.Warehouse.Adapter.Services
                 commands = collectionDb.Database.SqlQuery<TblCommandInfo>(sql, new SqlParameter("@StartTime", DateTime.Parse(dateOfLastCommandSaved).Date)).ToList();
             }
 
-            using (var tfsUsersContext = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
+            //using (var tfsUsersContext = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
+            using (var tfsUsersContext = new TFSUsersContext(_tfsLogUsageConnString))            
             {
                 commands.ForEach(x => 
                 {
@@ -63,8 +54,11 @@ namespace TFS.Warehouse.Adapter.Services
                         tfsUserLog.AccessDate = x.StartTime;
                     }
                     else
-                    { 
-                        tfsUsersContext.TFSUsageLog.Add(new TFSUsageLog(x.IdentityName, x.UserAgent, x.StartTime, x.Quantity));
+                    {
+                        var tfsUsageLog = new TFSUsageLog(x.IdentityName, x.StartTime, x.Quantity);
+                        tfsUsageLog.SetSoftwareUsedToConnect(x.UserAgent);
+
+                        tfsUsersContext.TFSUsageLog.Add(tfsUsageLog);
                     }
                 });
 
@@ -72,16 +66,6 @@ namespace TFS.Warehouse.Adapter.Services
             }
 
             dac.SetProperty(null, dateOfLastCommandSavedProperty, commands.Max(x => x.StartTime).ToString());
-        }
-
-        private static IRegistration GetRegistrationService(TeamFoundationRequestContext requestContext)
-        {
-            var locationService = requestContext.GetService<TeamFoundationLocationService>();
-            var tfsUri = new Uri(locationService.GetServerAccessMapping(requestContext).AccessPoint + "/" + requestContext.ServiceHost.Name);
-
-            var teamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(tfsUri);
-
-            return teamProjectCollection.GetService<IRegistration>();
         }
     }
 }

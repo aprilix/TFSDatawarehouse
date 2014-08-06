@@ -29,10 +29,16 @@ namespace TFS.Warehouse.Adapter
 
         private AdapterState _adapterState;
         private IVersionHelper _warehouseVersion;
+        private string _tfsLogUsageConnString;
+        private Database _tpcDatabase;
 
         public override void Initialize()
         {
             _warehouseVersion = new VersionHelper.TFSUsersAdapterVersion();
+
+            _tpcDatabase = Infra.TFSUtils.RetrieveTPCConectionString(this.RequestContext);
+
+            _tfsLogUsageConnString = _tpcDatabase.ConnectionString.Replace(_tpcDatabase.DatabaseName, "TFS_CustomDataWarehouse");
 
             _adapterState = AdapterState.Stopped;
         }
@@ -58,7 +64,7 @@ namespace TFS.Warehouse.Adapter
                         return ChangeAdapterState(DataChangesResult.SchemaChangesPending);
                     }
 
-                    TFSUsersLogUpdater.UpdateTFSUsersLog(dac, RequestContext);
+                    TFSUsersLogUpdater.UpdateTFSUsersLog(dac, RequestContext, _tpcDatabase.ConnectionString, _tfsLogUsageConnString);
                 }
 
                 return ChangeAdapterState(DataChangesResult.NoChangesPending);
@@ -74,7 +80,7 @@ namespace TFS.Warehouse.Adapter
         {
             try
             {
-                using (var db = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
+                using (var db = new TFSUsersContext(_tfsLogUsageConnString))
                 {
                     db.Database.CreateIfNotExists();
                 }
