@@ -9,6 +9,7 @@ using TFS.Warehouse.Adapter.Infra;
 using Microsoft.TeamFoundation.Server;
 using Microsoft.TeamFoundation.Framework.Server;
 using Microsoft.TeamFoundation.Client;
+using System.Text.RegularExpressions;
 
 namespace TFS.Warehouse.Adapter.Model
 {
@@ -57,13 +58,15 @@ namespace TFS.Warehouse.Adapter.Model
             }
             else if (userAgent.Contains("DEVENV"))
             {
-                if (userAgent.Contains("9."))
+                if (Regex.Match(userAgent, @".+DEVENV.EXE, 8\.").Success)
+                    Software = "Visual Studio 2005";
+                else if (Regex.Match(userAgent, @".+DEVENV.EXE, 9\.").Success)
                     Software = "Visual Studio 2008";
-                else if (userAgent.Contains("10."))
+                else if (Regex.Match(userAgent, @".+DEVENV.EXE, 10\.").Success)
                     Software = "Visual Studio 2010";
-                else if (userAgent.Contains("11."))
+                else if (Regex.Match(userAgent, @".+DEVENV.EXE, 11\.").Success)
                     Software = "Visual Studio 2012";
-                else if (userAgent.Contains("12."))
+                else if (Regex.Match(userAgent, @".+DEVENV.EXE, 12\.").Success)
                     Software = "Visual Studio 2013";
                 else
                     Software = "Visual Studio";

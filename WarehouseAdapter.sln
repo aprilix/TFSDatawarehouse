@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0306C717-CD62-465F-862B-A3C0C108CC92}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -12,10 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapter", "Warehou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupWarehouseAdapter", "SetupWarehouseAdapter\SetupWarehouseAdapter.csproj", "{043A80A9-F929-4BEA-8701-B0DE8EB10EC4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D865516-8DE8-4241-8BF2-44C80B7B5153}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapterTests", "WarehouseAdapterTests\WarehouseAdapterTests.csproj", "{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,11 +30,12 @@ Global
 		{043A80A9-F929-4BEA-8701-B0DE8EB10EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{043A80A9-F929-4BEA-8701-B0DE8EB10EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{043A80A9-F929-4BEA-8701-B0DE8EB10EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
