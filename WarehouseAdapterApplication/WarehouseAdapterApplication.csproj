@@ -7,8 +7,8 @@
     <ProjectGuid>{B54B8119-6A5E-4CC4-8934-893C6946D592}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WarehouseAdapterApplication</RootNamespace>
-    <AssemblyName>WarehouseAdapterApplication</AssemblyName>
+    <RootNamespace>TFS.Warehouse.Adapter.Common</RootNamespace>
+    <AssemblyName>TFSCustomAdapterCommon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
