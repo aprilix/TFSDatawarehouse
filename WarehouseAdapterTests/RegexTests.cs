@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace WarehouseAdapterTests
 {
     [TestClass]
-    public class UnitTest1
+    public class RegexTests
     {
         [TestMethod]
         public void Can_Determine_Visual_Studio_Commercial_Name_By_Their_Version_Number()
