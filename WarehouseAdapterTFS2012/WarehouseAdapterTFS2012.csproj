@@ -84,7 +84,14 @@
       <Name>WarehouseAdapterApplication</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Adapter.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Client.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Common.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Framework.Server.dll" />
+    <Content Include="Libs\VS2012\Microsoft.TeamFoundation.Warehouse.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
