@@ -10,11 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0306C7
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapter", "WarehouseAdapter\WarehouseAdapter.csproj", "{D0164A01-9221-40F3-9A1D-1102954C1154}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapterTFS2012", "WarehouseAdapter\WarehouseAdapterTFS2012.csproj", "{D0164A01-9221-40F3-9A1D-1102954C1154}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupWarehouseAdapter", "SetupWarehouseAdapter\SetupWarehouseAdapter.csproj", "{043A80A9-F929-4BEA-8701-B0DE8EB10EC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapterTests", "WarehouseAdapterTests\WarehouseAdapterTests.csproj", "{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapterTFS2013", "WarehouseAdapterTFS2013\WarehouseAdapterTFS2013.csproj", "{BC51797F-57A5-4154-9002-A22CA5A511F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAdapterApplication", "WarehouseAdapterApplication\WarehouseAdapterApplication.csproj", "{B54B8119-6A5E-4CC4-8934-893C6946D592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,14 @@ Global
 		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43469244-5DC1-4C29-817A-7CDC3F7E1BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC51797F-57A5-4154-9002-A22CA5A511F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC51797F-57A5-4154-9002-A22CA5A511F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC51797F-57A5-4154-9002-A22CA5A511F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC51797F-57A5-4154-9002-A22CA5A511F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B54B8119-6A5E-4CC4-8934-893C6946D592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54B8119-6A5E-4CC4-8934-893C6946D592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54B8119-6A5E-4CC4-8934-893C6946D592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54B8119-6A5E-4CC4-8934-893C6946D592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

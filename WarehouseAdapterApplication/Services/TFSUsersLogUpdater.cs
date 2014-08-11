@@ -1,8 +1,4 @@
-﻿using Microsoft.TeamFoundation.Client;
-using Microsoft.TeamFoundation.Framework.Server;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.Warehouse;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -16,7 +12,7 @@ namespace TFS.Warehouse.Adapter.Services
 {
     public class TFSUsersLogUpdater
     {
-        private static string dateOfLastCommandSavedProperty = "/Adapter/Schema/TFSUsersAdapter/DateOfLastCommandSaved";
+        //private static string dateOfLastCommandSavedProperty = "/Adapter/Schema/TFSUsersAdapter/DateOfLastCommandSaved";
 
         private static string sql = new StringBuilder()
                                     .AppendLine("SELECT Max(StartTime) StartTime, IdentityName, UserAgent, Count(IdentityName) Quantity")
@@ -25,20 +21,27 @@ namespace TFS.Warehouse.Adapter.Services
                                     .AppendLine(" GROUP BY Convert(date,StartTime), IdentityName, UserAgent")
                                     .AppendLine(" ORDER BY Convert(date,StartTime)").ToString();
 
-         internal static void UpdateTFSUsersLog(WarehouseDataAccessComponent dac, TeamFoundationRequestContext requestContext, string _tpcDatabaseConnString, string _tfsLogUsageConnString)
+        /// <summary>
+        /// Faz o update ou insert de dados nas tabelas de log
+        /// </summary>
+        /// <param name="dateOfLastCommandSaved">Data dos ultimos comandos processados pelo Adapter</param>
+        /// <param name="_tpcDatabaseConnString">ConnectionString para o banco de dados do Team Project Collection</param>
+        /// <param name="_tfsLogUsageConnString">ConnectionString para o banco de dadaos do Log</param>
+        /// <returns>Data do ultimo comando processado</returns>
+         public static DateTime UpdateTFSUsersLog(DateTime dateOfLastCommandSaved, string _tpcDatabaseConnString, string _tfsLogUsageConnString)
         {
             var commands = new List<TblCommandInfo>();
 
             using (var collectionDb = new TFSCollectionContext(_tpcDatabaseConnString))
             {
-                var dateOfLastCommandSaved = dac.GetProperty(null, dateOfLastCommandSavedProperty);
+            //    var dateOfLastCommandSaved = dac.GetProperty(null, dateOfLastCommandSavedProperty);
 
-                if (string.IsNullOrEmpty(dateOfLastCommandSaved))
-                {
-                    dateOfLastCommandSaved = "01/01/2001";
-                }
+            //    if (string.IsNullOrEmpty(dateOfLastCommandSaved))
+            //    {
+            //        dateOfLastCommandSaved = "01/01/2001";
+            //    }
 
-                commands = collectionDb.Database.SqlQuery<TblCommandInfo>(sql, new SqlParameter("@StartTime", DateTime.Parse(dateOfLastCommandSaved).Date)).ToList();
+                commands = collectionDb.Database.SqlQuery<TblCommandInfo>(sql, new SqlParameter("@StartTime", dateOfLastCommandSaved.Date)).ToList();
             }
 
             //using (var tfsUsersContext = new TFSUsersContext("Data Source=.;Initial Catalog=TFS_CustomDataWarehouse;Integrated Security=SSPI;"))
@@ -65,7 +68,8 @@ namespace TFS.Warehouse.Adapter.Services
                 tfsUsersContext.SaveChanges();
             }
 
-            dac.SetProperty(null, dateOfLastCommandSavedProperty, commands.Max(x => x.StartTime).ToString());
+            return commands.Max(x => x.StartTime);
+            //dac.SetProperty(null, dateOfLastCommandSavedProperty, commands.Max(x => x.StartTime).ToString());
         }
     }
 }

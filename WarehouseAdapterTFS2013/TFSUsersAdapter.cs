@@ -24,7 +24,7 @@ namespace TFS.Warehouse.Adapter
 
 
         private enum AdapterState
-        { 
+        {
             Stopped,
             Initializing,
             Processing
@@ -97,7 +97,7 @@ namespace TFS.Warehouse.Adapter
                 Utils.Log.LogEvent(RequestContext, err.Message, Utils.Log.LogEventInformationLevel.Error);
                 throw;
             }
-        }   
+        }
 
         private DataChangesResult ChangeAdapterState(DataChangesResult result)
         {

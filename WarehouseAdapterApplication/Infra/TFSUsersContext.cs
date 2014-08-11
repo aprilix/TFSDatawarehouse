@@ -32,4 +32,12 @@ namespace TFS.Warehouse.Adapter.Infra
                 });
         }
     }
+
+    public class TFSUserContextUpdater
+    {
+        public void CreateDatabaseIfNotExists()
+        { 
+            
+        }
+    }
 }

@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.TeamFoundation.Warehouse;
 using TFS.Warehouse.Adapter.Infra;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.Framework.Server;
-using Microsoft.TeamFoundation.Client;
 using System.Text.RegularExpressions;
 
 namespace TFS.Warehouse.Adapter.Model
