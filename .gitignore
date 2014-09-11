@@ -75,6 +75,7 @@ packages/
 *.suo
 *.user
 *.sln.docstates
+*.sln.ide/
 
 # Build results
 [Dd]ebug/

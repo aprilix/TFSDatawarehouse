@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TFS.Warehouse.Adapter.Infra;
 using TFS.Warehouse.Adapter.Model;
-using System.Data.Entity;
 
 namespace TFS.Warehouse.Adapter.Services
 {

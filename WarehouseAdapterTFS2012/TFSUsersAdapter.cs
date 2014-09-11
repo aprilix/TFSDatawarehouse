@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.TeamFoundation;
-using Microsoft.TeamFoundation.Warehouse;
-using TFS.Warehouse.Adapter.VersionHelper;
-using TFS.Warehouse.Adapter.Infra;
-using Microsoft.TeamFoundation.Framework.Server;
 using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.Client;
-using TFS.Warehouse.Adapter.Model;
-using System.Data.SqlClient;
+using Microsoft.TeamFoundation.Warehouse;
+using TFS.Warehouse.Adapter.Infra;
 using TFS.Warehouse.Adapter.Services;
+using TFS.Warehouse.Adapter.VersionHelper;
 
 
 namespace TFS.Warehouse.Adapter
@@ -24,7 +15,7 @@ namespace TFS.Warehouse.Adapter
 
 
         private enum AdapterState
-        { 
+        {
             Stopped,
             Initializing,
             Processing
@@ -97,7 +88,7 @@ namespace TFS.Warehouse.Adapter
                 Utils.Log.LogEvent(RequestContext, err.Message, Utils.Log.LogEventInformationLevel.Error);
                 throw;
             }
-        }   
+        }
 
         private DataChangesResult ChangeAdapterState(DataChangesResult result)
         {

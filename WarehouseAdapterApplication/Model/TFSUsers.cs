@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using TFS.Warehouse.Adapter.Infra;
 using System.Text.RegularExpressions;
 
 namespace TFS.Warehouse.Adapter.Model
