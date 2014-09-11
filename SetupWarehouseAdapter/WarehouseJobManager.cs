@@ -22,7 +22,7 @@ namespace SetupWarehouseAdapter
         /// you must use the WarehouseControlWebService ChangeSetting method.  The value set here will be overwritten
         /// the next time the Warehouse is brought offline then back online.
         /// </summary>
-        private int WarehouseJobDefaultProcessingInterval = 60; // 2 minutes.
+        private int WarehouseJobDefaultProcessingInterval = 60;
 
         private TfsTeamProjectCollection TeamProjectCollection { get; set; }
         private ITeamFoundationJobService CollectionJobService { get; set; }
